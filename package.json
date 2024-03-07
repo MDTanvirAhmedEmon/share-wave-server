@@ -5,14 +5,14 @@
   "main": "src/server.js",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts",
-    "lint:fix": "eslint --fix",
+    "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "lint:fix": "eslint . --fix",
     "prettier:fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "lint:prettier": "yarn lint:check && yarn prettier:fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tanvir Ahmed Emon",
   "license": "ISC",
   "lint-staged": {
     "src/**/*.ts": "yarn lint:prettier"
