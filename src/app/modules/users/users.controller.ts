@@ -1,20 +1,26 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { userServices } from './users.services'
+import config from '../../../config'
 
-const signUpUser = async (req: Request, res: Response) => {
+const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userData = req.body
-    const result = await userServices.signUpUser(userData)
+    const { refreshToken, ...others } = await userServices.signUpUser(userData)
+
+    const cookieOptions = {
+      secure: config.env === 'production',
+      httpOnly: true,
+    }
+
+    res.cookie('refreshToken', refreshToken, cookieOptions)
+
     res.status(200).json({
       success: true,
       message: 'user successfully signed up',
-      data: result,
+      data: others,
     })
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: 'failed to sign up',
-    })
+    next(error)
   }
 }
 

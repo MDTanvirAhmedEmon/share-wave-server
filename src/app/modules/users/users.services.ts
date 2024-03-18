@@ -4,7 +4,13 @@ import { createAccessToken } from '../../../helpers/jwtHelper'
 import { IUser } from './users.interface'
 import { User } from './users.model'
 
-const signUpUser = async (data: IUser): Promise<unknown> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const signUpUser = async (data: IUser): Promise<any> => {
+  const isExist = await User.findOne({ email: data.email })
+  if (isExist) {
+    throw new Error('User already exists')
+  }
+
   const result = await User.create(data)
 
   const tokenData = {
