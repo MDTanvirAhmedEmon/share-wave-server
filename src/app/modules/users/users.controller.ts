@@ -5,6 +5,7 @@ import config from '../../../config'
 const signUpUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userData = req.body
+    console.log(userData)
     const { refreshToken, ...others } = await userServices.signUpUser(userData)
 
     const cookieOptions = {

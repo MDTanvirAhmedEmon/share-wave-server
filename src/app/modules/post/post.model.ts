@@ -5,11 +5,9 @@ const postSchema = new Schema<IPost, PostModel>(
   {
     title: {
       type: String,
-      required: true,
     },
     description: {
       type: String,
-      required: true,
     },
     imageUrl: {
       type: String,
