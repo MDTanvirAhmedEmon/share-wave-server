@@ -15,7 +15,6 @@ export const uploadToCloudinary = async (file: any) => {
       file.path,
       { public_id: file.originalname },
       function (error, result) {
-        console.log(result)
         fs.unlinkSync(file.path)
         if (error) {
           reject(error)
