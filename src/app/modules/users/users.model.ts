@@ -31,7 +31,9 @@ const userSchema = new Schema<IUser, UserModel>(
     },
     profileImageUrl: {
       type: String,
-      required: true,
+    },
+    coverPhoto: {
+      type: String,
     },
     dateOfBirth: {
       type: Date,

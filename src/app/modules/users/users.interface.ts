@@ -8,6 +8,7 @@ export type IUser = {
   phone: number
   gender: string
   profileImageUrl: string
+  coverPhoto: string
   dateOfBirth: Date
   address: string
 }

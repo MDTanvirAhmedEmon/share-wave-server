@@ -47,7 +47,65 @@ const signInUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const getUserInfo = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req?.user?.id
+    const result = await userServices.getUserInfo(userId)
+
+    res.status(200).json({
+      success: true,
+      message: 'get user info successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const updateProfilePicture = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const file = req.file
+    const id = req.params.id
+    const result = await userServices.updateProfilePicture(file, id)
+
+    res.status(200).json({
+      success: true,
+      message: 'user profile picture updated successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const updateCoverPhoto = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const file = req.file
+    const id = req.params.id
+    const result = await userServices.updateCoverPhoto(file, id)
+
+    res.status(200).json({
+      success: true,
+      message: 'user cover photo updated successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const userController = {
   signUpUser,
   signInUser,
+  getUserInfo,
+  updateProfilePicture,
+  updateCoverPhoto,
 }
