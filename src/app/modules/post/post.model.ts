@@ -3,10 +3,7 @@ import { IPost, PostModel } from './post.interface'
 
 const postSchema = new Schema<IPost, PostModel>(
   {
-    title: {
-      type: String,
-    },
-    description: {
+    text: {
       type: String,
     },
     imageUrl: {

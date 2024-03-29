@@ -1,9 +1,17 @@
 import express from 'express'
 import { postController } from './post.controller'
 import { upload } from '../../../helpers/fileUploader'
+import auth from '../../middlewares/auth'
 
 const router = express.Router()
 
-router.post('/create-post', upload.single('file'), postController.createPost)
+router.post(
+  '/create-post',
+  auth(),
+  upload.single('file'),
+  postController.createPost,
+)
+router.get('/all-post', postController.getAllPost)
+router.get('/my-post', auth(), postController.getMyPost)
 
 export const postRouters = router
