@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Secret } from 'jsonwebtoken'
 import config from '../../../config'
@@ -5,6 +7,7 @@ import { createAccessToken } from '../../../helpers/jwtHelper'
 import { IUser } from './users.interface'
 import { User } from './users.model'
 import { uploadToCloudinary } from '../../../helpers/fileUploader'
+import { Post } from '../post/post.model'
 
 const signUpUser = async (data: IUser): Promise<any> => {
   const isExist = await User.findOne({ email: data.email })
@@ -76,11 +79,16 @@ const updateProfilePicture = async (
   id: string,
 ): Promise<IUser | null> => {
   const data: any = {}
+  const postData: any = {}
   const uploadedImage: any = await uploadToCloudinary(file)
   const profilePicture = uploadedImage.secure_url
   data.profileImageUrl = profilePicture
-
+  postData.imageUrl = profilePicture
+  postData.userId = id
   const result = await User.findByIdAndUpdate({ _id: id }, data, { new: true })
+  if (result) {
+    const postResult = await Post.create(postData)
+  }
   return result
 }
 
@@ -89,11 +97,17 @@ const updateCoverPhoto = async (
   id: string,
 ): Promise<IUser | null> => {
   const data: any = {}
+  const postData: any = {}
   const uploadedImage: any = await uploadToCloudinary(file)
   const coverPhoto = uploadedImage.secure_url
   data.coverPhoto = coverPhoto
+  postData.imageUrl = coverPhoto
+  postData.userId = id
 
   const result = await User.findByIdAndUpdate({ _id: id }, data, { new: true })
+  if (result) {
+    const postResult = await Post.create(postData)
+  }
   return result
 }
 

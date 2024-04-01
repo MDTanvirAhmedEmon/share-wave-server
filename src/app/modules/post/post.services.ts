@@ -24,7 +24,7 @@ const getAllPost = async (): Promise<IPost[]> => {
 }
 
 const getMyPost = async (id: string): Promise<IPost[]> => {
-  const result = await Post.find({ userId: id })
+  const result = await Post.find({ userId: id }).sort({ createdAt: 'desc' })
   return result
 }
 

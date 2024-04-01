@@ -69,7 +69,8 @@ const updateProfilePicture = async (
 ) => {
   try {
     const file = req.file
-    const id = req.params.id
+    const id = req?.user?.id
+    console.log(id)
     const result = await userServices.updateProfilePicture(file, id)
 
     res.status(200).json({
@@ -89,7 +90,7 @@ const updateCoverPhoto = async (
 ) => {
   try {
     const file = req.file
-    const id = req.params.id
+    const id = req?.user?.id
     const result = await userServices.updateCoverPhoto(file, id)
 
     res.status(200).json({
