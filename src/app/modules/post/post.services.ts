@@ -4,6 +4,7 @@ import { uploadToCloudinary } from '../../../helpers/fileUploader'
 import { IUser } from '../users/users.interface'
 import { IPost } from './post.interface'
 import { Post } from './post.model'
+import { LoveReact } from '../loveReact/loveReact.model'
 
 const createPost = async (
   file: any,
@@ -18,14 +19,42 @@ const createPost = async (
   return result
 }
 
-const getAllPost = async (): Promise<IPost[]> => {
-  const result = await Post.find()
-  return result
+const getAllPost = async (id: string): Promise<IPost[]> => {
+  const posts = await Post.find()
+  const postsWithReactions: IPost[] = []
+  for (const post of posts) {
+    const reactions = await LoveReact.find({ postId: post._id })
+    const userAlreadyReacted = reactions.some(
+      reaction => reaction?.userId.toString() === id,
+    )
+    const postWithReactions = {
+      ...post.toObject(),
+      reactions,
+      userAlreadyReacted,
+    }
+    postsWithReactions.push(postWithReactions)
+  }
+
+  return postsWithReactions
 }
 
 const getMyPost = async (id: string): Promise<IPost[]> => {
-  const result = await Post.find({ userId: id }).sort({ createdAt: 'desc' })
-  return result
+  const posts = await Post.find({ userId: id }).sort({ createdAt: 'desc' })
+  const postsWithReactions: IPost[] = []
+  for (const post of posts) {
+    const reactions = await LoveReact.find({ postId: post._id })
+    const userAlreadyReacted = reactions.some(
+      reaction => reaction?.userId.toString() === id,
+    )
+    const postWithReactions = {
+      ...post.toObject(),
+      reactions,
+      userAlreadyReacted,
+    }
+    postsWithReactions.push(postWithReactions)
+  }
+
+  return postsWithReactions
 }
 
 export const postServices = {

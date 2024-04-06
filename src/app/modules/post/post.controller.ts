@@ -20,7 +20,8 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
 
 const getAllPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await postServices.getAllPost()
+    const userId = req?.user?.id
+    const result = await postServices.getAllPost(userId)
 
     res.status(200).json({
       success: true,

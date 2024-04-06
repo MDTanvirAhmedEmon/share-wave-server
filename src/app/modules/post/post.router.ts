@@ -11,7 +11,7 @@ router.post(
   upload.single('file'),
   postController.createPost,
 )
-router.get('/all-post', postController.getAllPost)
+router.get('/all-post', auth(), postController.getAllPost)
 router.get('/my-post', auth(), postController.getMyPost)
 
 export const postRouters = router
