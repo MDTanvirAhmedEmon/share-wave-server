@@ -57,8 +57,14 @@ const getMyPost = async (id: string): Promise<IPost[]> => {
   return postsWithReactions
 }
 
+const getSinglePost = async (id: string): Promise<IPost | null> => {
+  const result = await Post.findById({ _id: id })
+  return result
+}
+
 export const postServices = {
   createPost,
   getAllPost,
   getMyPost,
+  getSinglePost,
 }

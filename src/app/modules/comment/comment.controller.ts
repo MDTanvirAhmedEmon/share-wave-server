@@ -22,6 +22,26 @@ const createComment = async (
   }
 }
 
+const getAllComment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const postId = req.params.id
+    const result = await commentServices.getAllComment(postId)
+
+    res.status(200).json({
+      success: true,
+      message: 'get all comment successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const commentController = {
   createComment,
+  getAllComment,
 }

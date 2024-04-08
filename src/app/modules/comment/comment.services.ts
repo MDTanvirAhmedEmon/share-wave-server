@@ -13,6 +13,14 @@ const createComment = async (
   return result
 }
 
+const getAllComment = async (postId: string): Promise<IComment[]> => {
+  const result = await Comment.find({ postId: postId })
+    .populate('userId', 'firstName lastName profileImageUrl')
+    .sort({ createdAt: 'desc' })
+  return result
+}
+
 export const commentServices = {
   createComment,
+  getAllComment,
 }

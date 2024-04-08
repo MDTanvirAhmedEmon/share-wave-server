@@ -13,5 +13,6 @@ router.post(
 )
 router.get('/all-post', auth(), postController.getAllPost)
 router.get('/my-post', auth(), postController.getMyPost)
+router.get('/single-post/:id', postController.getSinglePost)
 
 export const postRouters = router

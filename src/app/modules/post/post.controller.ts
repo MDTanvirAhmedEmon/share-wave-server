@@ -48,8 +48,28 @@ const getMyPost = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const getSinglePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = req.params.id
+    const result = await postServices.getSinglePost(id)
+
+    res.status(200).json({
+      success: true,
+      message: 'get single post successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const postController = {
   createPost,
   getAllPost,
   getMyPost,
+  getSinglePost,
 }
