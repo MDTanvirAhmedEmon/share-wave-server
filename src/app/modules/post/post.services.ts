@@ -5,6 +5,7 @@ import { IUser } from '../users/users.interface'
 import { IPost } from './post.interface'
 import { Post } from './post.model'
 import { LoveReact } from '../loveReact/loveReact.model'
+import { Share } from '../share/share.model'
 
 const createPost = async (
   file: any,
@@ -20,7 +21,10 @@ const createPost = async (
 }
 
 const getAllPost = async (id: string): Promise<IPost[]> => {
+  const randomSkip = Math.floor(Math.random() * 5)
   const posts = await Post.find()
+    .populate('userId', 'firstName lastName profileImageUrl')
+    .skip(randomSkip)
   const postsWithReactions: IPost[] = []
   for (const post of posts) {
     const reactions = await LoveReact.find({ postId: post._id })
@@ -39,8 +43,17 @@ const getAllPost = async (id: string): Promise<IPost[]> => {
 }
 
 const getMyPost = async (id: string): Promise<IPost[]> => {
-  const posts = await Post.find({ userId: id }).sort({ createdAt: 'desc' })
-  const postsWithReactions: IPost[] = []
+  const posts = await Post.find({ userId: id })
+    .populate('userId', 'firstName lastName profileImageUrl')
+    .sort({ createdAt: 'desc' })
+
+  const sharedPosts = await Share.find({ userId: id })
+    .populate('userId', 'firstName lastName profileImageUrl')
+    .populate('ownerId', 'firstName lastName profileImageUrl')
+    .populate('postId')
+    .sort({ createdAt: 'desc' })
+
+  const postsWithReactions: any[] = []
   for (const post of posts) {
     const reactions = await LoveReact.find({ postId: post._id })
     const userAlreadyReacted = reactions.some(
@@ -53,7 +66,24 @@ const getMyPost = async (id: string): Promise<IPost[]> => {
     }
     postsWithReactions.push(postWithReactions)
   }
-
+  for (const post of sharedPosts) {
+    const sharedPost: any = post.postId
+    console.log(sharedPost)
+    const reactions = await LoveReact.find({ postId: sharedPost._id })
+    console.log('hello bro', reactions)
+    const userAlreadyReacted = reactions.some(
+      reaction => reaction?.userId.toString() === id,
+    )
+    const postWithReactions = {
+      ...post.toObject(),
+      reactions,
+      userAlreadyReacted,
+    }
+    postsWithReactions.push(postWithReactions)
+  }
+  postsWithReactions.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )
   return postsWithReactions
 }
 
