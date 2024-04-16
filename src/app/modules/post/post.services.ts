@@ -68,9 +68,7 @@ const getMyPost = async (id: string): Promise<IPost[]> => {
   }
   for (const post of sharedPosts) {
     const sharedPost: any = post.postId
-    console.log(sharedPost)
     const reactions = await LoveReact.find({ postId: sharedPost._id })
-    console.log('hello bro', reactions)
     const userAlreadyReacted = reactions.some(
       reaction => reaction?.userId.toString() === id,
     )

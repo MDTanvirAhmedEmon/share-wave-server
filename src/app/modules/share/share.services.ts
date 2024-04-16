@@ -5,8 +5,6 @@ const sharePost = async (
   userId: string,
   data: Partial<IShare>,
 ): Promise<IShare> => {
-  console.log(data)
-  console.log(userId)
   const shareData = {
     userId: userId,
     ownerId: data.ownerId,
@@ -17,6 +15,12 @@ const sharePost = async (
   return result
 }
 
+const deleteShare = async (id: string): Promise<IShare | null> => {
+  const result = await Share.findByIdAndDelete({ _id: id })
+  return result
+}
+
 export const shareServices = {
   sharePost,
+  deleteShare,
 }

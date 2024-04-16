@@ -17,6 +17,22 @@ const sharePost = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const deleteShare = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id
+    const result = await shareServices.deleteShare(id)
+
+    res.status(200).json({
+      success: true,
+      message: 'share deleted successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const shareController = {
   sharePost,
+  deleteShare,
 }

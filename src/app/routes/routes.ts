@@ -4,6 +4,7 @@ import { postRouters } from '../modules/post/post.router'
 import { loveReactRouters } from '../modules/loveReact/loveReact.router'
 import { commentRouters } from '../modules/comment/comment.router'
 import { shareRouters } from '../modules/share/share.router'
+import { followersRouters } from '../modules/follower/follower.router'
 
 const router = express.Router()
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/share',
     element: shareRouters,
+  },
+  {
+    path: '/followers',
+    element: followersRouters,
   },
 ]
 
