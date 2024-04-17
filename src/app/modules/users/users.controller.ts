@@ -70,7 +70,6 @@ const updateProfilePicture = async (
   try {
     const file = req.file
     const id = req?.user?.id
-    console.log(id)
     const result = await userServices.updateProfilePicture(file, id)
 
     res.status(200).json({
@@ -103,10 +102,46 @@ const updateCoverPhoto = async (
   }
 }
 
+const getAllUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req?.user?.id
+    const result = await userServices.getAllUser(id)
+
+    res.status(200).json({
+      success: true,
+      message: 'get all user successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = req?.params.id
+    const result = await userServices.getSingleUser(id)
+
+    res.status(200).json({
+      success: true,
+      message: 'get single user successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const userController = {
   signUpUser,
   signInUser,
   getUserInfo,
   updateProfilePicture,
   updateCoverPhoto,
+  getAllUser,
+  getSingleUser,
 }

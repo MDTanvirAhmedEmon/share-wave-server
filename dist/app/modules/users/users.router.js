@@ -12,6 +12,8 @@ const router = express_1.default.Router();
 router.post('/sign-up', users_controller_1.userController.signUpUser);
 router.post('/sign-in', users_controller_1.userController.signInUser);
 router.get('/get-user-info', (0, auth_1.default)(), users_controller_1.userController.getUserInfo);
+router.get('/get-all-users', (0, auth_1.default)(), users_controller_1.userController.getAllUser);
+router.get('/get-single-user/:id', users_controller_1.userController.getSingleUser);
 router.patch('/update-profile-picture', (0, auth_1.default)(), fileUploader_1.upload.single('file'), users_controller_1.userController.updateProfilePicture);
 router.patch('/update-cover-photo', (0, auth_1.default)(), fileUploader_1.upload.single('file'), users_controller_1.userController.updateCoverPhoto);
 exports.userRouters = router;

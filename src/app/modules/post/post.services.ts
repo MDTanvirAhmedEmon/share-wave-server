@@ -21,10 +21,10 @@ const createPost = async (
 }
 
 const getAllPost = async (id: string): Promise<IPost[]> => {
-  const randomSkip = Math.floor(Math.random() * 5)
-  const posts = await Post.find()
-    .populate('userId', 'firstName lastName profileImageUrl')
-    .skip(randomSkip)
+  const posts = await Post.find().populate(
+    'userId',
+    'firstName lastName profileImageUrl',
+  )
   const postsWithReactions: IPost[] = []
   for (const post of posts) {
     const reactions = await LoveReact.find({ postId: post._id })

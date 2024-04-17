@@ -10,6 +10,7 @@ const post_router_1 = require("../modules/post/post.router");
 const loveReact_router_1 = require("../modules/loveReact/loveReact.router");
 const comment_router_1 = require("../modules/comment/comment.router");
 const share_router_1 = require("../modules/share/share.router");
+const follower_router_1 = require("../modules/follower/follower.router");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -31,6 +32,10 @@ const moduleRoutes = [
     {
         path: '/share',
         element: share_router_1.shareRouters,
+    },
+    {
+        path: '/followers',
+        element: follower_router_1.followersRouters,
     },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.element));

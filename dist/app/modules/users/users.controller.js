@@ -85,7 +85,6 @@ const updateProfilePicture = (req, res, next) => __awaiter(void 0, void 0, void 
     try {
         const file = req.file;
         const id = (_d = req === null || req === void 0 ? void 0 : req.user) === null || _d === void 0 ? void 0 : _d.id;
-        console.log(id);
         const result = yield users_services_1.userServices.updateProfilePicture(file, id);
         res.status(200).json({
             success: true,
@@ -113,10 +112,41 @@ const updateCoverPhoto = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         next(error);
     }
 });
+const getAllUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _f;
+    try {
+        const id = (_f = req === null || req === void 0 ? void 0 : req.user) === null || _f === void 0 ? void 0 : _f.id;
+        const result = yield users_services_1.userServices.getAllUser(id);
+        res.status(200).json({
+            success: true,
+            message: 'get all user successfully',
+            data: result,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+const getSingleUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req === null || req === void 0 ? void 0 : req.params.id;
+        const result = yield users_services_1.userServices.getSingleUser(id);
+        res.status(200).json({
+            success: true,
+            message: 'get single user successfully',
+            data: result,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
 exports.userController = {
     signUpUser,
     signInUser,
     getUserInfo,
     updateProfilePicture,
     updateCoverPhoto,
+    getAllUser,
+    getSingleUser,
 };

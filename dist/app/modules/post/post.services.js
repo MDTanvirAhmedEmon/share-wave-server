@@ -23,10 +23,8 @@ const createPost = (file, data, id) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 const getAllPost = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const randomSkip = Math.floor(Math.random() * 5);
     const posts = yield post_model_1.Post.find()
-        .populate('userId', 'firstName lastName profileImageUrl')
-        .skip(randomSkip);
+        .populate('userId', 'firstName lastName profileImageUrl');
     const postsWithReactions = [];
     for (const post of posts) {
         const reactions = yield loveReact_model_1.LoveReact.find({ postId: post._id });

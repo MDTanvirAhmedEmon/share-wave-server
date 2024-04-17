@@ -111,10 +111,26 @@ const updateCoverPhoto = async (
   return result
 }
 
+const getAllUser = async (id: string): Promise<Partial<IUser | unknown>> => {
+  const result = await User.find({ _id: { $ne: id } }).select(
+    'firstName lastName profileImageUrl createdAt',
+  )
+  return result
+}
+
+const getSingleUser = async (id: string): Promise<Partial<IUser | null>> => {
+  const result = await User.findById({ _id: id }).select(
+    'firstName lastName profileImageUrl coverPhoto createdAt',
+  )
+  return result
+}
+
 export const userServices = {
   signUpUser,
   signInUser,
   getUserInfo,
   updateProfilePicture,
   updateCoverPhoto,
+  getAllUser,
+  getSingleUser,
 }
