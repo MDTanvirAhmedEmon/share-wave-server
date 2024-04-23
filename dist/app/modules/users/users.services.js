@@ -88,11 +88,11 @@ const updateCoverPhoto = (file, id) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 const getAllUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield users_model_1.User.find({ _id: { $ne: id } }).select("firstName lastName profileImageUrl createdAt");
+    const result = yield users_model_1.User.find({ _id: { $ne: id } }).select('firstName lastName profileImageUrl createdAt');
     return result;
 });
 const getSingleUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield users_model_1.User.findById({ _id: id }).select("firstName lastName profileImageUrl coverPhoto createdAt");
+    const result = yield users_model_1.User.findById({ _id: id }).select('firstName lastName profileImageUrl coverPhoto createdAt');
     return result;
 });
 exports.userServices = {

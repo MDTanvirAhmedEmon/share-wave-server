@@ -58,6 +58,21 @@ const getMyPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         next(error);
     }
 });
+const getUserMyPost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _d;
+    try {
+        const id = (_d = req === null || req === void 0 ? void 0 : req.params) === null || _d === void 0 ? void 0 : _d.id;
+        const result = yield post_services_1.postServices.getMyPost(id);
+        res.status(200).json({
+            success: true,
+            message: 'get my post successfully',
+            data: result,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
 const getSinglePost = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
@@ -77,4 +92,5 @@ exports.postController = {
     getAllPost,
     getMyPost,
     getSinglePost,
+    getUserMyPost,
 };

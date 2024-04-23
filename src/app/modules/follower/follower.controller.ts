@@ -67,9 +67,26 @@ const getFollowing = async (
   }
 }
 
+const isFollowing = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const follower = req?.user?.id
+    const following = req?.params?.id
+    const result = await followerServices.isFollowing(follower, following)
+
+    res.status(200).json({
+      success: true,
+      message: 'isFollowing data retrieve successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const followerController = {
   doFollow,
   unFollow,
   getFollower,
   getFollowing,
+  isFollowing,
 }

@@ -34,9 +34,22 @@ const getFollowing = async (follower: string): Promise<IFollowers[]> => {
   return result
 }
 
+const isFollowing = async (
+  follower: string,
+  following: string,
+): Promise<any> => {
+  const result = await Followers.findOne({ follower, following })
+  if (result) {
+    return { isFollowing: true }
+  } else {
+    return { isFollowing: false }
+  }
+}
+
 export const followerServices = {
   doFollow,
   unFollow,
   getFollower,
   getFollowing,
+  isFollowing,
 }

@@ -48,6 +48,25 @@ const getMyPost = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const getUserMyPost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const id = req?.params?.id
+    const result = await postServices.getMyPost(id)
+
+    res.status(200).json({
+      success: true,
+      message: 'get my post successfully',
+      data: result,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const getSinglePost = async (
   req: Request,
   res: Response,
@@ -72,4 +91,5 @@ export const postController = {
   getAllPost,
   getMyPost,
   getSinglePost,
+  getUserMyPost,
 }

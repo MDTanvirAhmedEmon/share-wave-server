@@ -23,8 +23,7 @@ const createPost = (file, data, id) => __awaiter(void 0, void 0, void 0, functio
     return result;
 });
 const getAllPost = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const posts = yield post_model_1.Post.find()
-        .populate('userId', 'firstName lastName profileImageUrl');
+    const posts = yield post_model_1.Post.find().populate('userId', 'firstName lastName profileImageUrl');
     const postsWithReactions = [];
     for (const post of posts) {
         const reactions = yield loveReact_model_1.LoveReact.find({ postId: post._id });

@@ -12,5 +12,6 @@ const router = express_1.default.Router();
 router.post('/create-post', (0, auth_1.default)(), fileUploader_1.upload.single('file'), post_controller_1.postController.createPost);
 router.get('/all-post', (0, auth_1.default)(), post_controller_1.postController.getAllPost);
 router.get('/my-post', (0, auth_1.default)(), post_controller_1.postController.getMyPost);
+router.get('/user-my-post/:id', post_controller_1.postController.getUserMyPost);
 router.get('/single-post/:id', post_controller_1.postController.getSinglePost);
 exports.postRouters = router;
