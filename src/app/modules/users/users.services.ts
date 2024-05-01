@@ -8,6 +8,7 @@ import { IUser } from './users.interface'
 import { User } from './users.model'
 import { uploadToCloudinary } from '../../../helpers/fileUploader'
 import { Post } from '../post/post.model'
+import { Followers } from '../follower/follower.model'
 
 const signUpUser = async (data: IUser): Promise<any> => {
   const isExist = await User.findOne({ email: data.email })
@@ -115,7 +116,16 @@ const getAllUser = async (id: string): Promise<Partial<IUser | unknown>> => {
   const result = await User.find({ _id: { $ne: id } }).select(
     'firstName lastName profileImageUrl createdAt',
   )
-  return result
+  const followStatusPromises = result.map(async user => {
+    const follow = await Followers.findOne({
+      follower: id,
+      following: user._id,
+    })
+    return { ...user.toObject(), isFollowing: !!follow }
+  })
+  const usersWithFollowStatus = await Promise.all(followStatusPromises)
+  console.log(followStatusPromises)
+  return usersWithFollowStatus
 }
 
 const getSingleUser = async (id: string): Promise<Partial<IUser | null>> => {
